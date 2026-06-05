@@ -83,7 +83,7 @@ The baseline model was a linear regression model using four quantitative feature
 
 These features were imputed with the median and standardized in a single sklearn pipeline. The baseline model had a test RMSE of about **0.64**, a test MAE of about **0.47**, and a test R² that was extremely close to 0 and slightly negative.
 
-This baseline was useful, but it was not very strong. The very low R² means the model explains almost none of the variation in average rating beyond predicting something close to the mean. Recipe ratings are highly concentrated near high values and are also subjective, so simple numeric recipe characteristics do not capture much of the variation in user ratings.
+This baseline was useful, but it was not very strong. The very low R² means the model explains almost none of the variation in average rating beyond predicting something close to the mean. Recipe ratings are highly concentrated near high values and are also subjective, so simple numeric recipe characteristics do not capture much of the variation in user ratings. The baseline predictions are also concentrated near the overall average rating, suggesting that the linear regression model is learning that giving most recipes a similar high predicted rating is close to the best it can do with these limited features.
 
 ## Final Model
 
@@ -113,6 +113,8 @@ The best settings were:
 The final model had a test RMSE of about **0.63**, a test MAE of about **0.46**, and an R² of about **0.02**. This is a small improvement over the baseline, and the larger `alpha` value helps address overfitting by shrinking coefficients.
 
 However, the low R² is still important. Even after adding nutrition and tag information, the model explains only a small fraction of the variation in average rating. This suggests that average rating is highly subjective and is likely influenced by factors that are not fully available in recipe metadata, such as individual taste, expectations, popularity, reviewer behavior, and whether users follow the recipe exactly.
+
+The prediction plots reinforce this interpretation. Both the baseline linear regression model and the final Ridge regression model produce predictions that are much more compressed than the actual ratings, mostly around the overall average rating. This suggests that, given only the information available on the recipe page, predicting roughly the same rating for most dishes is close to the optimal strategy, rather than evidence that the model found strong recipe-specific signals.
 
 <iframe src="assets/model_performance.html" width="100%" height="500" frameborder="0"></iframe>
 
