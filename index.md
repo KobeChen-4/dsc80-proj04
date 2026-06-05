@@ -1,5 +1,7 @@
 # What Makes a Food.com Recipe Highly Rated?
 
+**Name:** Kobe
+
 This project analyzes recipes and user ratings from Food.com. The main question is:
 
 **Which recipe characteristics are associated with higher average ratings, and can we predict a recipe's average rating from information available before users review it?**
