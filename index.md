@@ -6,7 +6,7 @@ This project analyzes recipes and user ratings from Food.com. The main question 
 
 The dataset contains **83,782 recipes** and **731,927 user interactions**. Each recipe includes preparation time, number of steps, number of ingredients, nutrition information, and tags. Each interaction includes a user rating and review. Since ratings of 0 represent missing ratings rather than real 0-star ratings, I treated them as missing values.
 
-## Step 1: Introduction
+## Introduction
 
 I chose this question because recipe ratings are useful to both people choosing recipes and recipe creators trying to understand what makes a recipe appealing. In this project, I focus on `average_rating`, the mean non-missing rating for each recipe.
 
@@ -22,7 +22,7 @@ The most important columns are:
 | `rating` | User rating from the interactions table |
 | `average_rating` | The response variable created by averaging nonzero ratings for each recipe |
 
-## Step 2: Data Cleaning and Exploratory Data Analysis
+## Data Cleaning and Exploratory Data Analysis
 
 To clean the data, I merged the recipe and interaction tables, replaced rating values of 0 with missing values, and computed each recipe's `average_rating`. I also split the `nutrition` column into separate numeric columns: `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, and `carbohydrates`.
 
@@ -38,7 +38,7 @@ I also looked at average rating across both preparation time and ingredient-coun
 
 <iframe src="assets/rating_heatmap.html" width="100%" height="560" frameborder="0"></iframe>
 
-## Step 3: Assessment of Missingness
+## Assessment of Missingness
 
 The main missingness question is whether `average_rating` is missing completely at random. A recipe's `average_rating` is missing when it has no valid nonzero ratings.
 
@@ -46,7 +46,7 @@ I do not believe `average_rating` is NMAR. The missingness is better explained a
 
 I ran permutation tests comparing recipes with missing and non-missing `average_rating` across several observed columns. The missingness of `average_rating` was strongly associated with variables such as `n_interactions`, `day_since_first_submission`, `n_steps`, `calories`, and `n_ingredients`. This gives evidence against MCAR and supports MAR.
 
-## Step 4: Hypothesis Testing
+## Hypothesis Testing
 
 I tested whether simpler recipes tend to have higher average ratings than more complex recipes. I defined simple recipes as recipes with at most the median number of steps. The median number of steps was **9**, so:
 
@@ -62,7 +62,7 @@ I tested whether simpler recipes tend to have higher average ratings than more c
 
 I used a significance level of **0.05**. The observed statistic was about **0.0031**, and the permutation-test p-value was about **0.255**. Since the p-value is greater than 0.05, I failed to reject the null hypothesis. There is not strong evidence that simpler recipes, measured by number of steps, receive higher ratings.
 
-## Step 5: Framing a Prediction Problem
+## Framing a Prediction Problem
 
 The prediction task is to predict a recipe's `average_rating`. This is a **regression** problem because the response variable is numerical.
 
@@ -70,7 +70,7 @@ I used RMSE as the main evaluation metric because it measures prediction error i
 
 The model only uses information that would be available before users rate the recipe, such as preparation time, number of steps, ingredients, nutrition information, and tags. I did not use post-publication variables such as `n_interactions` in the prediction model.
 
-## Step 6: Baseline Model
+## Baseline Model
 
 The baseline model was a linear regression model using four quantitative features:
 
@@ -83,7 +83,7 @@ These features were imputed with the median and standardized in a single sklearn
 
 This baseline was useful, but it was not very strong. Recipe ratings are highly concentrated near high values, and simple numeric recipe characteristics do not capture much of the variation in user ratings.
 
-## Step 7: Final Model
+## Final Model
 
 The final model improved on the baseline by adding more recipe information while keeping the model interpretable. It used a regularized linear regression model, **Ridge regression**, inside a single sklearn pipeline.
 
@@ -112,7 +112,7 @@ The final model had a test RMSE of about **0.63** and a test MAE of about **0.46
 
 <iframe src="assets/model_performance.html" width="100%" height="500" frameborder="0"></iframe>
 
-## Step 8: Fairness Analysis
+## Fairness Analysis
 
 For fairness, I compared whether the final model performs worse for longer recipes than for quick recipes.
 
