@@ -116,6 +116,10 @@ However, the low R² is still important. Even after adding nutrition and tag inf
 
 The prediction plots reinforce this interpretation. Both the baseline linear regression model and the final Ridge regression model produce predictions that are much more compressed than the actual ratings, mostly around the overall average rating. This suggests that, given only the information available on the recipe page, predicting roughly the same rating for most dishes is close to the optimal strategy, rather than evidence that the model found strong recipe-specific signals.
 
+<iframe src="assets/baseline_prediction_ecdf.html" width="100%" height="540" frameborder="0"></iframe>
+
+<iframe src="assets/final_prediction_ecdf.html" width="100%" height="540" frameborder="0"></iframe>
+
 <iframe src="assets/model_performance.html" width="100%" height="500" frameborder="0"></iframe>
 
 ## Fairness Analysis
